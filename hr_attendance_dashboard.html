@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power BI HR Attendance Dashboard - Vy_DB 16:9 Mockup</title>
+    <!-- Tailwind CSS for UI styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for professional icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for beautiful interactive charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Segoe UI', Calibri, sans-serif;
+            background-color: #e5e7eb;
+        }
+        /* Strict 16:9 Workspace boundaries */
+        .pbi-canvas {
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            max-width: 1600px;
+            background-color: #f3f4f6;
+        }
+        /* Custom scrollbars matching Power BI style */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f3f4f6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- 16:9 POWER BI DESKTOP SIMULATOR CONTAINER -->
+    <div class="pbi-canvas flex flex-col shadow-2xl border border-slate-300 rounded-lg overflow-hidden bg-[#f3f4f6]">
+        
+        <!-- TOP STATUS HEADER (Power BI Mockup File Info) -->
+        <header class="bg-[#1f2937] text-white px-5 py-2.5 flex items-center justify-between border-b border-slate-700 text-xs">
+            <div class="flex items-center space-x-3">
+                <div class="bg-amber-500 text-slate-900 px-1.5 py-0.5 rounded font-bold text-[10px] flex items-center">
+                    <i class="fa-solid fa-chart-bar mr-1"></i> Power BI
+                </div>
+                <div>
+                    <h1 class="font-semibold text-slate-100">Processors - Vy_DB - HR Attendance Dashboard</h1>
+                    <p class="text-[9px] text-slate-400">Database Connection: SQL Server Views (Direct Mode)</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-slate-300 bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Tỷ lệ khung hình: 16:9 Standard</span>
+                <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-circle-check mr-1"></i> Đã đồng bộ</span>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT BODY -->
+        <div class="flex flex-1 overflow-hidden">
+            
+            <!-- LEFT PANEL: Multi-select Checkbox Slicers -->
+            <aside class="w-60 bg-white border-r border-slate-200 p-3 flex flex-col justify-between text-xs overflow-y-auto">
+                <div class="space-y-4">
+                    <!-- Title of Slicers -->
+                    <div class="border-b border-slate-100 pb-2 flex items-center justify-between text-slate-700 font-bold uppercase tracking-wider text-[10px]">
+                        <span><i class="fa-solid fa-filter text-slate-500 mr-1.5"></i> Bộ lọc báo cáo</span>
+                        <button onclick="resetAllSlicers()" class="text-indigo-600 font-semibold hover:underline">Clear</button>
+                    </div>
+
+                    <!-- Year Month checklist -->
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">Year, Month</label>
+                        <div class="border border-slate-200 rounded p-1.5 max-h-32 overflow-y-auto space-y-1 bg-slate-50">
+                            <label class="flex items-center space-x-2 text-slate-600 cursor-pointer">
+                                <input type="checkbox" id="checkAllYears" onchange="toggleSelectAllYears(this)" checked class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                                <span class="font-medium text-[11px]">Select all</span>
+                            </label>
+                            <div class="pl-2 space-y-1" id="yearsContainer">
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="2018" class="year-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()"><span class="text-[11px]">2018</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="2019" class="year-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()"><span class="text-[11px]">2019</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="2020" class="year-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()"><span class="text-[11px]">2020</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="2021" class="year-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()"><span class="text-[11px]">2021</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="2022" class="year-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()"><span class="text-[11px]">2022</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="2023" class="year-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()"><span class="text-[11px]">2023</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="2024" class="year-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()"><span class="text-[11px]">2024</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="2025" class="year-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()"><span class="text-[11px]">2025</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="2026" class="year-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()" checked><span class="text-[11px]">2026</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Department Selection -->
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">TenPhongBan</label>
+                        <div class="border border-slate-200 rounded p-1.5 max-h-24 overflow-y-auto space-y-1 bg-slate-50">
+                            <label class="flex items-center space-x-2 text-slate-600 cursor-pointer">
+                                <input type="checkbox" id="checkAllDepts" onchange="toggleSelectAllDepts(this)" checked class="rounded border-slate-300 text-indigo-600">
+                                <span class="font-medium text-[11px]">Select all</span>
+                            </label>
+                            <div class="pl-2 space-y-1" id="deptsContainer">
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="Tân Cang 6" class="dept-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()" checked><span class="text-[11px]">Tân Cang 6</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="DONACOOP" class="dept-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()" checked><span class="text-[11px]">DONACOOP</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AnomalyReason checklist options -->
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">AnomalyReason</label>
+                        <div class="border border-slate-200 rounded p-1.5 max-h-28 overflow-y-auto space-y-1 bg-slate-50">
+                            <label class="flex items-center space-x-2 text-slate-600 cursor-pointer">
+                                <input type="checkbox" id="checkAllAnomalies" onchange="toggleSelectAllAnomalies(this)" checked class="rounded border-slate-300 text-indigo-600">
+                                <span class="font-medium text-[11px]">Select all</span>
+                            </label>
+                            <div class="pl-2 space-y-1" id="anomaliesContainer">
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="Chưa xếp ca" class="anomaly-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()" checked><span class="text-[11px]">Chưa xếp ca</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="Đi trễ" class="anomaly-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()" checked><span class="text-[11px]">Đi trễ</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="Thiếu giờ ra" class="anomaly-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()" checked><span class="text-[11px]">Thiếu giờ ra</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="Về sớm" class="anomaly-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()" checked><span class="text-[11px]">Về sớm</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical guidelines branding -->
+                <div class="bg-slate-50 p-2.5 rounded border border-slate-200">
+                    <p class="text-[9px] text-slate-500 leading-relaxed">
+                        <i class="fa-solid fa-circle-info text-slate-400 mr-1"></i> Thiết kế đồng bộ font <strong>Segoe UI</strong> và bảng màu xanh Navy sâu theo tiêu chuẩn Power BI Desktop.
+                    </p>
+                </div>
+            </aside>
+
+            <!-- VIEWPORT: Where the actual pages display -->
+            <main class="flex-1 flex flex-col overflow-y-auto p-4 bg-[#f8f9fa]" id="pbiViewport">
+                <div id="pageContent" class="h-full flex flex-col justify-between"></div>
+            </main>
+        </div>
+
+        <!-- BOTTOM TAB CONTAINER -->
+        <footer class="bg-white border-t border-slate-200 px-4 py-1.5 flex items-center justify-between text-xs select-none">
+            <div class="flex items-center space-x-1 overflow-x-auto">
+                <button onclick="changeActivePage('01_Overview')" id="tab-01_Overview" class="tab-btn px-3.5 py-1 rounded text-[11px] font-semibold border transition duration-150 flex items-center space-x-1">
+                    <i class="fa-solid fa-chart-pie"></i> <span>01_Overview</span>
+                </button>
+                <button onclick="changeActivePage('02_Department')" id="tab-02_Department" class="tab-btn px-3.5 py-1 rounded text-[11px] font-semibold border transition duration-150 flex items-center space-x-1">
+                    <i class="fa-solid fa-network-wired"></i> <span>02_Department</span>
+                </button>
+                <button onclick="changeActivePage('03_Employee')" id="tab-03_Employee" class="tab-btn px-3.5 py-1 rounded text-[11px] font-semibold border transition duration-150 flex items-center space-x-1">
+                    <i class="fa-solid fa-address-card"></i> <span>03_Employee</span>
+                </button>
+                <button onclick="changeActivePage('04_Anomaly')" id="tab-04_Anomaly" class="tab-btn px-3.5 py-1 rounded text-[11px] font-semibold border transition duration-150 flex items-center space-x-1">
+                    <i class="fa-solid fa-shield-halved"></i> <span>04_Anomaly</span>
+                </button>
+                <button onclick="changeActivePage('05_Raw_Log_Audit')" id="tab-05_Raw_Log_Audit" class="tab-btn px-3.5 py-1 rounded text-[11px] font-semibold border transition duration-150 flex items-center space-x-1">
+                    <i class="fa-solid fa-list-ul"></i> <span>05_Raw_Log_Audit</span>
+                </button>
+            </div>
+            <div class="text-[10px] text-slate-400 font-medium">
+                16:9 Viewport Active | Vy_DB Template
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // GLOBAL STATE
+        let activePage = "01_Overview";
+
+        // THEME COLOR SETTINGS BASED ON THE UPLOADED IMAGES
+        const themeNavy = "#181a40"; // Dark solid navy blue for the bar charts and line
+        const themeNavyLight = "rgba(24, 26, 64, 0.45)"; // Soft shading underneath the area trend
+        const themeGrey = "#d1d5db";
+
+        // MOCK RAW DATABASE
+        const database = {
+            overview: {
+                totalEmployees: 18,
+                totalWorkDays: 279,
+                totalWorkCount: "271.61",
+                totalWorkHours: "3.09K",
+                totalLateDays: 3,
+                anomalyCount: 340
+            },
+            anomalies: [
+                { date: "Tuesday, March 31, 2026", id: "10005", name: "NGÔ THỊ KIM LAN", dept: "Tân Cang 6", reason: "Chưa xếp ca", status: "Chưa xếp ca / nghỉ theo lịch", time: "", in: "", out: "", late: 0, early: 0 },
+                { date: "Tuesday, March 31, 2026", id: "10008", name: "PHẠM XUÂN HẢI", dept: "Tân Cang 6", reason: "Chưa xếp ca", status: "Chưa xếp ca / nghỉ theo lịch", time: "", in: "", out: "", late: 0, early: 0 },
+                { date: "Tuesday, March 31, 2026", id: "10040SX", name: "PHAN ĐÌNH HẠNH", dept: "Tân Cang 6", reason: "Chưa xếp ca", status: "Chưa xếp ca / nghỉ theo lịch", time: "", in: "", out: "", late: 0, early: 0 },
+                { date: "Tuesday, March 31, 2026", id: "10042SX", name: "PHAN CHÂN TUYỂN", dept: "Tân Cang 6", reason: "Chưa xếp ca", status: "Chưa xếp ca / nghỉ theo lịch", time: "", in: "", out: "", late: 0, early: 0 },
+                { date: "Tuesday, March 31, 2026", id: "10048", name: "ĐÀO ĐÌNH MINH", dept: "Tân Cang 6", reason: "Chưa xếp ca", status: "Chưa xếp ca / nghỉ theo lịch", time: "", in: "", out: "", late: 0, early: 0 }
+            ],
+            rawLogs: [
+                { date: "Saturday, Sep 15, 2018", id: "02013", name: "HUNG", dept: "Tân Cang 6", code: "2013", check: "9/15/2018 9:49:56 AM - 5:45:16 PM", count: 6, machine: "Máy TÂN CANG 6" },
+                { date: "Saturday, Sep 15, 2018", id: "3", name: "NGUYỄN VĂN NHẬT", dept: "Tân Cang 6", code: "3", check: "9/15/2018 9:52:38 AM - 4:23:37 PM", count: 3, machine: "Máy TÂN CANG 6" },
+                { date: "Saturday, Sep 15, 2018", id: "972", name: "VÕ HỒNG PHƯƠNG", dept: "Tân Cang 6", code: "972", check: "9/15/2018 9:26:42 AM - 5:39:00 PM", count: 2, machine: "Máy TÂN CANG 6" }
+            ]
+        };
+
+        function changeActivePage(pageName) {
+            activePage = pageName;
+
+            // Update Tab activation styles
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-[#181a40]', 'text-white', 'border-[#181a40]', 'shadow-md');
+                btn.classList.add('bg-slate-50', 'text-slate-600', 'border-slate-200', 'hover:bg-slate-100');
+            });
+
+            const currentTab = document.getElementById(`tab-${pageName}`);
+            if (currentTab) {
+                currentTab.classList.remove('bg-slate-50', 'text-slate-600', 'border-slate-200', 'hover:bg-slate-100');
+                currentTab.classList.add('bg-[#181a40]', 'text-white', 'border-[#181a40]', 'shadow-md');
+            }
+
+            renderPage();
+        }
+
+        // TRIGGER FILTER RE-RENDERS
+        function triggerFilterChange() {
+            renderPage();
+        }
+
+        // MULTI-SELECT UTILITIES
+        function toggleSelectAllYears(master) {
+            document.querySelectorAll('.year-checkbox').forEach(chk => chk.checked = master.checked);
+            triggerFilterChange();
+        }
+        function toggleSelectAllDepts(master) {
+            document.querySelectorAll('.dept-checkbox').forEach(chk => chk.checked = master.checked);
+            triggerFilterChange();
+        }
+        function toggleSelectAllAnomalies(master) {
+            document.querySelectorAll('.anomaly-checkbox').forEach(chk => chk.checked = master.checked);
+            triggerFilterChange();
+        }
+
+        function resetAllSlicers() {
+            document.getElementById('checkAllYears').checked = true;
+            toggleSelectAllYears({checked: true});
+            document.getElementById('checkAllDepts').checked = true;
+            toggleSelectAllDepts({checked: true});
+            document.getElementById('checkAllAnomalies').checked = true;
+            toggleSelectAllAnomalies({checked: true});
+        }
+
+        function renderPage() {
+            const viewport = document.getElementById('pageContent');
+
+            if (activePage === '01_Overview') {
+                renderOverview(viewport);
+            } else if (activePage === '02_Department') {
+                renderDepartment(viewport);
+            } else if (activePage === '03_Employee') {
+                renderEmployee(viewport);
+            } else if (activePage === '04_Anomaly') {
+                renderAnomaly(viewport);
+            } else if (activePage === '05_Raw_Log_Audit') {
+                renderRawLogAudit(viewport);
+            }
+        }
+
+        // -----------------------------------------------------
+        // RENDER PAGE 01: OVERVIEW
+        // -----------------------------------------------------
+        function renderOverview(container) {
+            container.innerHTML = `
+                <!-- Header of page -->
+                <div class="mb-3">
+                    <h2 class="text-sm font-bold text-[#181a40] uppercase tracking-wide">PAGE 01: TỔNG QUAN CHẤM CÔNG</h2>
+                    <p class="text-[10px] text-slate-500">Xem nhanh các KPI đo lường đi muộn, về sớm, tổng giờ làm việc và xử lý bất thường.</p>
+                </div>
+
+                <!-- 6 KPI Row (Simple border, flat, centered data values) -->
+                <div class="grid grid-cols-6 gap-3 mb-3">
+                    <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-xl font-bold text-slate-800 leading-none">18</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Employees</p>
+                    </div>
+                    <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-xl font-bold text-slate-800 leading-none">279</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Work Days</p>
+                    </div>
+                    <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-xl font-bold text-slate-800 leading-none">271.61</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Work Count</p>
+                    </div>
+                    <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-xl font-bold text-slate-800 leading-none">3.09K</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Work Hours</p>
+                    </div>
+                    <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-xl font-bold text-slate-800 leading-none text-[#181a40]">3</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Late Days</p>
+                    </div>
+                    <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-xl font-bold text-slate-800 leading-none text-rose-700">340</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Anomaly Count</p>
+                    </div>
+                </div>
+
+                <!-- Charts layout: Area Chart Left, Bar Chart Right -->
+                <div class="grid grid-cols-5 gap-3 mb-3">
+                    <div class="col-span-3 bg-white p-2 rounded border border-slate-200 shadow-sm">
+                        <p class="text-[10px] font-bold text-slate-700 mb-1">Xu hướng đi trễ và bất thường theo ngày</p>
+                        <div class="h-32 relative">
+                            <canvas id="chartTrendOverview"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-span-2 bg-white p-2 rounded border border-slate-200 shadow-sm">
+                        <p class="text-[10px] font-bold text-slate-700 mb-1">Ngày đi trễ theo phòng ban</p>
+                        <div class="h-32 relative">
+                            <canvas id="chartDeptOverview"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom audit database table -->
+                <div class="bg-white rounded border border-slate-200 overflow-hidden shadow-sm flex-1 flex flex-col">
+                    <div class="bg-slate-50 px-3 py-1.5 border-b border-slate-200 flex justify-between items-center">
+                        <span class="text-[9px] font-bold text-slate-700 uppercase tracking-wider">Danh sách ca bất thường cần kiểm tra</span>
+                        <span class="text-[8px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-bold uppercase">Mới nhất</span>
+                    </div>
+                    <div class="overflow-y-auto flex-1 max-h-48">
+                        <table class="w-full text-left border-collapse text-[9px]">
+                            <thead>
+                                <tr class="bg-slate-100 border-b border-slate-200 text-slate-600 font-bold uppercase">
+                                    <th class="p-2">WorkDate</th>
+                                    <th class="p-2">MaNhanVien</th>
+                                    <th class="p-2">TenNhanVien</th>
+                                    <th class="p-2">TenPhongBan</th>
+                                    <th class="p-2">AnomalyReason</th>
+                                    <th class="p-2">AttendanceStatus</th>
+                                    <th class="p-2 text-center">FirstCheckTime</th>
+                                    <th class="p-2 text-center">GioVao</th>
+                                    <th class="p-2 text-center">GioRa</th>
+                                    <th class="p-2 text-right">LateMinutes</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-slate-600 font-medium">
+                                ${database.anomalies.map(row => `
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-2 font-semibold text-slate-700">${row.date}</td>
+                                        <td class="p-2 font-mono">${row.id}</td>
+                                        <td class="p-2 font-bold text-slate-800">${row.name}</td>
+                                        <td class="p-2">${row.dept}</td>
+                                        <td class="p-2 text-[#181a40] font-bold">${row.reason}</td>
+                                        <td class="p-2 text-slate-500">${row.status}</td>
+                                        <td class="p-2 text-center">—</td>
+                                        <td class="p-2 text-center">—</td>
+                                        <td class="p-2 text-center">—</td>
+                                        <td class="p-2 text-right font-bold">${row.late}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+            initOverviewCharts();
+        }
+
+        function initOverviewCharts() {
+            // Line trend (Solid line, filled area)
+            const ctxTrend = document.getElementById('chartTrendOverview').getContext('2d');
+            new Chart(ctxTrend, {
+                type: 'line',
+                data: {
+                    labels: ['Mar 01', 'Mar 08', 'Mar 15', 'Mar 22', 'Mar 29'],
+                    datasets: [
+                        {
+                            label: 'Total Late Days',
+                            data: [13, 11, 13, 10, 19],
+                            borderColor: themeNavy,
+                            backgroundColor: themeNavyLight,
+                            borderWidth: 2.5,
+                            fill: true,
+                            tension: 0.1,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { min: 0, max: 20, ticks: { font: { size: 8 } } },
+                        x: { ticks: { font: { size: 8 } } }
+                    }
+                }
+            });
+
+            // Department Bar Chart
+            const ctxDept = document.getElementById('chartDeptOverview').getContext('2d');
+            new Chart(ctxDept, {
+                type: 'bar',
+                data: {
+                    labels: ['Tân Cang 6'],
+                    datasets: [{
+                        data: [3],
+                        backgroundColor: themeNavy,
+                        borderRadius: 2,
+                        barThickness: 16
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { min: 0, max: 3, ticks: { font: { size: 8 } } },
+                        y: { ticks: { font: { size: 8 } } }
+                    }
+                }
+            });
+        }
+
+        // -----------------------------------------------------
+        // RENDER PAGE 02: DEPARTMENT COMPARISON
+        // -----------------------------------------------------
+        function renderDepartment(container) {
+            container.innerHTML = `
+                <div class="mb-3">
+                    <h2 class="text-sm font-bold text-[#181a40] uppercase tracking-wide">PAGE 02: SO SÁNH PHÒNG BAN</h2>
+                    <p class="text-[10px] text-slate-500">Giám sát hiệu suất chấm công và tình hình kỷ luật giữa các bộ phận.</p>
+                </div>
+
+                <!-- Matrix matrix style table -->
+                <div class="bg-white rounded border border-slate-200 overflow-hidden shadow-sm mb-3">
+                    <div class="bg-slate-50 px-3 py-1.5 border-b border-slate-200">
+                        <span class="text-[9px] font-bold text-slate-700 uppercase">Tổng hợp chấm công theo phòng ban</span>
+                    </div>
+                    <table class="w-full text-left border-collapse text-[10px]">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-200 font-bold text-slate-700 uppercase">
+                                <th class="p-2">TenPhongBan</th>
+                                <th class="p-2 text-center">Total Employees</th>
+                                <th class="p-2 text-center">Total Work Days</th>
+                                <th class="p-2 text-center">Total Work Hours</th>
+                                <th class="p-2 text-center">Total Work Count</th>
+                                <th class="p-2 text-center">Total Late Days</th>
+                                <th class="p-2 text-center">Missing Check Days</th>
+                                <th class="p-2 text-center">Anomaly Count</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 font-semibold text-slate-600">
+                            <tr>
+                                <td class="p-2.5 font-bold text-slate-800">Tân Cang 6</td>
+                                <td class="p-2.5 text-center">18</td>
+                                <td class="p-2.5 text-center">279</td>
+                                <td class="p-2.5 text-center">3,089.57</td>
+                                <td class="p-2.5 text-center">271.61</td>
+                                <td class="p-2.5 text-center text-[#181a40]">3</td>
+                                <td class="p-2.5 text-center">27</td>
+                                <td class="p-2.5 text-center">340</td>
+                            </tr>
+                            <tr class="bg-slate-50 font-bold text-slate-800 border-t border-slate-300">
+                                <td class="p-2.5">Total</td>
+                                <td class="p-2.5 text-center">18</td>
+                                <td class="p-2.5 text-center">279</td>
+                                <td class="p-2.5 text-center">3,089.57</td>
+                                <td class="p-2.5 text-center">271.61</td>
+                                <td class="p-2.5 text-center">3</td>
+                                <td class="p-2.5 text-center">27</td>
+                                <td class="p-2.5 text-center">340</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 3 small side-by-side charts matching Image 3 -->
+                <div class="grid grid-cols-3 gap-3 flex-1 min-h-[140px]">
+                    <div class="bg-white p-2 rounded border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <p class="text-[9px] font-bold text-slate-600">Tổng giờ công theo phòng ban</p>
+                        <div class="h-28 relative">
+                            <canvas id="chartDeptHours"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-2 rounded border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <p class="text-[9px] font-bold text-slate-600">Ngày đi trễ theo phòng ban</p>
+                        <div class="h-28 relative">
+                            <canvas id="chartDeptLate2"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-2 rounded border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <p class="text-[9px] font-bold text-slate-600">Số bất thường theo phòng ban</p>
+                        <div class="h-28 relative">
+                            <canvas id="chartDeptAnomaly2"></canvas>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            initPage2Charts();
+        }
+
+        function initPage2Charts() {
+            // Hours
+            new Chart(document.getElementById('chartDeptHours').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Tân Cang 6'],
+                    datasets: [{
+                        data: [3.09],
+                        backgroundColor: themeNavy,
+                        barThickness: 16
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { min: 0, max: 3, ticks: { font: { size: 8 }, callback: value => value + 'K' } },
+                        x: { ticks: { font: { size: 8 } } }
+                    }
+                }
+            });
+
+            // Late
+            new Chart(document.getElementById('chartDeptLate2').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Tân Cang 6'],
+                    datasets: [{
+                        data: [3],
+                        backgroundColor: themeNavy,
+                        barThickness: 16
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { min: 0, max: 3, ticks: { font: { size: 8 } } },
+                        x: { ticks: { font: { size: 8 } } }
+                    }
+                }
+            });
+
+            // Anomaly
+            new Chart(document.getElementById('chartDeptAnomaly2').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Tân Cang 6'],
+                    datasets: [{
+                        data: [340],
+                        backgroundColor: themeNavy,
+                        barThickness: 16
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { min: 0, max: 300, ticks: { font: { size: 8 } } },
+                        x: { ticks: { font: { size: 8 } } }
+                    }
+                }
+            });
+        }
+
+        // -----------------------------------------------------
+        // RENDER PAGE 03: EMPLOYEE DETAIL
+        // -----------------------------------------------------
+        function renderEmployee(container) {
+            container.innerHTML = `
+                <div class="mb-3">
+                    <h2 class="text-sm font-bold text-[#181a40] uppercase tracking-wide">PAGE 03: TRA CỨU NHÂN VIÊN</h2>
+                    <p class="text-[10px] text-slate-500">Xem hồ sơ chấm công, theo dõi tăng ca và thời gian đi muộn của từng nhân sự.</p>
+                </div>
+
+                <!-- 5 Card row for employee -->
+                <div class="grid grid-cols-5 gap-3 mb-3">
+                    <div class="bg-white p-2 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-lg font-bold text-slate-800 leading-none">279</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Work Days</p>
+                    </div>
+                    <div class="bg-white p-2 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-lg font-bold text-slate-800 leading-none">3.09K</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Work Hours</p>
+                    </div>
+                    <div class="bg-white p-2 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-lg font-bold text-slate-800 leading-none">560.04</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total OT Hours</p>
+                    </div>
+                    <div class="bg-white p-2 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-lg font-bold text-[#181a40] leading-none">3</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Late Days</p>
+                    </div>
+                    <div class="bg-white p-2 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-lg font-bold text-rose-700 leading-none">27</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Missing Check Days</p>
+                    </div>
+                </div>
+
+                <!-- Employee detail records table -->
+                <div class="bg-white rounded border border-slate-200 overflow-hidden shadow-sm flex-1 flex flex-col">
+                    <div class="bg-slate-50 px-3 py-1.5 border-b border-slate-200">
+                        <span class="text-[9px] font-bold text-slate-700 uppercase">Chi tiết chấm công theo nhân viên</span>
+                    </div>
+                    <div class="overflow-y-auto flex-1 max-h-[220px]">
+                        <table class="w-full text-left border-collapse text-[9px]">
+                            <thead>
+                                <tr class="bg-slate-100 border-b border-slate-200 font-bold text-slate-600 uppercase">
+                                    <th class="p-2">WorkDate</th>
+                                    <th class="p-2">MaNhanVien</th>
+                                    <th class="p-2">TenNhanVien</th>
+                                    <th class="p-2 text-center">GioVao - GioRa - Ca</th>
+                                    <th class="p-2 text-right">CongValue</th>
+                                    <th class="p-2 text-right">Sum of GioValue</th>
+                                    <th class="p-2 text-right">LateMinutes</th>
+                                    <th class="p-2">AttendanceStatus</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-slate-600 font-medium">
+                                <tr>
+                                    <td class="p-2">Sunday, March 01, 2026</td>
+                                    <td class="p-2 font-mono">10005</td>
+                                    <td class="p-2 font-bold text-slate-800">NGÔ THỊ KIM LAN</td>
+                                    <td class="p-2 text-center text-amber-600 font-semibold">03:46:59 - 14:49:45</td>
+                                    <td class="p-2 text-right">0.00</td>
+                                    <td class="p-2 text-right">0.00</td>
+                                    <td class="p-2 text-right">0</td>
+                                    <td class="p-2 text-slate-400">Chưa xếp ca / nghỉ theo lịch</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2">Sunday, March 01, 2026</td>
+                                    <td class="p-2 font-mono">10008</td>
+                                    <td class="p-2 font-bold text-slate-800">PHẠM XUÂN HẢI</td>
+                                    <td class="p-2 text-center text-emerald-600 font-semibold">HC_LT 07:10:40 - 19:48:44</td>
+                                    <td class="p-2 text-right">1.00</td>
+                                    <td class="p-2 text-right">8.00</td>
+                                    <td class="p-2 text-right">0</td>
+                                    <td class="p-2 text-emerald-600 font-bold">Có công</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2">Sunday, March 01, 2026</td>
+                                    <td class="p-2 font-mono">10040SX</td>
+                                    <td class="p-2 font-bold text-slate-800">PHAN ĐÌNH HẠNH</td>
+                                    <td class="p-2 text-center text-amber-600 font-semibold">HC_LT 04:05:43 - 13:23:52</td>
+                                    <td class="p-2 text-right">0.62</td>
+                                    <td class="p-2 text-right">4.98</td>
+                                    <td class="p-2 text-right">0</td>
+                                    <td class="p-2 text-amber-600">Có công - về sớm (181m)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // -----------------------------------------------------
+        // RENDER PAGE 04: ANOMALY PANEL
+        // -----------------------------------------------------
+        function renderAnomaly(container) {
+            container.innerHTML = `
+                <div class="mb-3">
+                    <h2 class="text-sm font-bold text-[#181a40] uppercase tracking-wide">PAGE 04: XỬ LÝ BẤT THƯỜNG</h2>
+                    <p class="text-[10px] text-slate-500">Rà soát trực quan các lỗi log, thiếu vân tay, đi muộn hoặc về sớm cần xử lý.</p>
+                </div>
+
+                <!-- 4 cards top of layout -->
+                <div class="grid grid-cols-4 gap-3 mb-3">
+                    <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-xl font-bold text-rose-600 leading-none">340</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Anomaly Count</p>
+                    </div>
+                    <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-xl font-bold text-slate-800 leading-none">27</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Missing Check Days</p>
+                    </div>
+                    <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-xl font-bold text-slate-800 leading-none text-[#181a40]">3</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Late Days</p>
+                    </div>
+                    <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-xl font-bold text-slate-800 leading-none">28</p>
+                        <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Early Leave Days</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-5 gap-3 flex-1 min-h-[160px]">
+                    <!-- Left: bar chart representation -->
+                    <div class="col-span-2 bg-white p-2 rounded border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <p class="text-[9px] font-bold text-slate-600">Số bất thường theo loại lỗi</p>
+                        <div class="h-32 relative">
+                            <canvas id="chartAnomalyReasonsType"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Right: Table -->
+                    <div class="col-span-3 bg-white rounded border border-slate-200 overflow-hidden shadow-sm flex flex-col">
+                        <div class="bg-slate-50 px-3 py-1 border-b border-slate-200">
+                            <span class="text-[9px] font-bold text-slate-700 uppercase">Danh sách bất thường cần xử lý</span>
+                        </div>
+                        <div class="overflow-y-auto flex-1 max-h-[120px]">
+                            <table class="w-full text-left border-collapse text-[9px]">
+                                <tbody class="divide-y divide-slate-100 text-slate-600">
+                                    <tr>
+                                        <td class="p-1.5">Sunday, March 01, 2026</td>
+                                        <td class="p-1.5 font-bold">NGÔ THỊ KIM LAN</td>
+                                        <td class="p-1.5"><span class="px-1 py-0.5 rounded bg-amber-50 text-amber-700 text-[8px] font-bold">Chưa xếp ca</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-1.5">Sunday, March 01, 2026</td>
+                                        <td class="p-1.5 font-bold">PHAN ĐÌNH HẠNH</td>
+                                        <td class="p-1.5"><span class="px-1 py-0.5 rounded bg-rose-50 text-rose-700 text-[8px] font-bold">Về sớm</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            initAnomalyPageCharts();
+        }
+
+        function initAnomalyPageCharts() {
+            const ctx = document.getElementById('chartAnomalyReasonsType').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Chưa xếp ca', 'Thiếu giờ ra', 'Về sớm', 'Đi trễ'],
+                    datasets: [{
+                        data: [300, 27, 28, 3],
+                        backgroundColor: themeNavy,
+                        borderRadius: 2,
+                        barThickness: 12
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { min: 0, max: 300, ticks: { font: { size: 8 } } },
+                        x: { ticks: { font: { size: 8 } } }
+                    }
+                }
+            });
+        }
+
+        // -----------------------------------------------------
+        // RENDER PAGE 05: RAW LOG
+        // -----------------------------------------------------
+        function renderRawLogAudit(container) {
+            container.innerHTML = `
+                <div class="mb-3">
+                    <h2 class="text-sm font-bold text-[#181a40] uppercase tracking-wide">PAGE 05: LOG GỐC</h2>
+                    <p class="text-[10px] text-slate-500">Nhật ký thô trực tiếp từ thiết bị chấm công để đối soát lỗi khí có khiếu nại.</p>
+                </div>
+
+                <!-- 2 Card indicators -->
+                <div class="grid grid-cols-2 gap-4 mb-3">
+                    <div class="bg-white p-3 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-2xl font-bold text-slate-800 leading-none">183K</p>
+                        <p class="text-[10px] text-slate-400 mt-1 font-semibold uppercase">Raw Log Count</p>
+                    </div>
+                    <div class="bg-white p-3 rounded border border-slate-200 text-center shadow-sm">
+                        <p class="text-2xl font-bold text-slate-800 leading-none">371</p>
+                        <p class="text-[10px] text-slate-400 mt-1 font-semibold uppercase">Raw Log Employees</p>
+                    </div>
+                </div>
+
+                <!-- Log database grid -->
+                <div class="bg-white rounded border border-slate-200 overflow-hidden shadow-sm flex-1 flex flex-col">
+                    <div class="bg-slate-50 px-3 py-1.5 border-b border-slate-200">
+                        <span class="text-[9px] font-bold text-slate-700 uppercase">Nhật ký log gốc từ máy chấm công</span>
+                    </div>
+                    <div class="overflow-y-auto flex-1 max-h-[180px]">
+                        <table class="w-full text-left border-collapse text-[9px]">
+                            <thead>
+                                <tr class="bg-slate-100 border-b border-slate-200 text-slate-600 font-bold uppercase">
+                                    <th class="p-2">WorkDate</th>
+                                    <th class="p-2">MaNhanVien</th>
+                                    <th class="p-2">TenNhanVien</th>
+                                    <th class="p-2">MaChamCong</th>
+                                    <th class="p-2">FirstCheckTime - LastCheckTime</th>
+                                    <th class="p-2 text-center">LogCount</th>
+                                    <th class="p-2">MachineList</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-slate-600 font-medium">
+                                ${database.rawLogs.map(log => `
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-2">${log.date}</td>
+                                        <td class="p-2 font-mono">${log.id}</td>
+                                        <td class="p-2 font-bold text-slate-800">${log.name}</td>
+                                        <td class="p-2 font-mono">${log.code}</td>
+                                        <td class="p-2 font-medium text-slate-500">${log.check}</td>
+                                        <td class="p-2 text-center font-bold text-slate-700">${log.count}</td>
+                                        <td class="p-2 text-slate-400 text-[8px]">${log.machine}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // INITIAL PAGE BOOTSTRAP
+        window.onload = function() {
+            changeActivePage('01_Overview');
+        }
+    </script>
+</body>
+</html>
