@@ -108,6 +108,10 @@
                                 <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="Kho vận" class="dept-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()" checked><span class="text-[11px]">Kho vận</span></label>
                                 <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="Hành chính" class="dept-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()" checked><span class="text-[11px]">Hành chính</span></label>
                                 <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="Kỹ thuật" class="dept-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()" checked><span class="text-[11px]">Kỹ thuật</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="Nhân sự" class="dept-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()" checked><span class="text-[11px]">Nhân sự</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="Kế toán" class="dept-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()" checked><span class="text-[11px]">Kế toán</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="Bảo trì" class="dept-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()" checked><span class="text-[11px]">Bảo trì</span></label>
+                                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer"><input type="checkbox" value="QC" class="dept-checkbox rounded border-slate-300 text-indigo-600" onchange="triggerFilterChange()" checked><span class="text-[11px]">QC</span></label>
                             </div>
                         </div>
                     </div>
@@ -182,12 +186,12 @@
         // MOCK RAW DATABASE
         const database = {
             overview: {
-                totalEmployees: 186,
-                totalWorkDays: 3126,
-                totalWorkCount: "2,964.75",
-                totalWorkHours: "25.8K",
-                totalLateDays: 42,
-                anomalyCount: 428
+                totalEmployees: 250,
+                totalWorkDays: 4200,
+                totalWorkCount: "3,976.25",
+                totalWorkHours: "34.7K",
+                totalLateDays: 63,
+                anomalyCount: 622
             },
             anomalies: [
                 { date: "Tuesday, March 31, 2026", id: "10005", name: "NGÔ THỊ KIM LAN", dept: "Tân Cảng 6", reason: "Chưa xếp ca", status: "Chưa xếp ca / nghỉ theo lịch", time: "", in: "", out: "", late: 0, early: 0 },
@@ -197,14 +201,45 @@
                 { date: "Tuesday, March 31, 2026", id: "10048", name: "ĐÀO ĐÌNH MINH", dept: "Kỹ thuật", reason: "Đi trễ", status: "Có công - đi trễ", time: "08:35 - 17:42", in: "08:35", out: "17:42", late: 35, early: 0 },
                 { date: "Tuesday, March 31, 2026", id: "10112", name: "TRẦN THỊ BÍCH NGỌC", dept: "Hành chính", reason: "Chưa xếp ca", status: "Chưa xếp ca / nghỉ theo lịch", time: "", in: "", out: "", late: 0, early: 0 },
                 { date: "Tuesday, March 31, 2026", id: "10128", name: "LÊ MINH QUÂN", dept: "Long Hưng", reason: "Về sớm", status: "Có công - về sớm", time: "07:50 - 15:40", in: "07:50", out: "15:40", late: 0, early: 20 },
-                { date: "Tuesday, March 31, 2026", id: "10139", name: "VÕ THỊ THANH TÂM", dept: "Sản xuất", reason: "Thiếu giờ ra", status: "Thiếu log ra", time: "08:02 -", in: "08:02", out: "", late: 2, early: 0 }
+                { date: "Tuesday, March 31, 2026", id: "10139", name: "VÕ THỊ THANH TÂM", dept: "Sản xuất", reason: "Thiếu giờ ra", status: "Thiếu log ra", time: "08:02 -", in: "08:02", out: "", late: 2, early: 0 },
+                { date: "Monday, March 30, 2026", id: "10152", name: "NGUYỄN HOÀNG NAM", dept: "Nhân sự", reason: "Đi trễ", status: "Có công - đi trễ", time: "08:18 - 17:10", in: "08:18", out: "17:10", late: 18, early: 0 },
+                { date: "Monday, March 30, 2026", id: "10166", name: "TRỊNH THỊ MAI", dept: "Kế toán", reason: "Về sớm", status: "Có công - về sớm", time: "07:55 - 15:35", in: "07:55", out: "15:35", late: 0, early: 25 },
+                { date: "Friday, March 27, 2026", id: "10173", name: "LÂM QUỐC BẢO", dept: "Bảo trì", reason: "Thiếu giờ ra", status: "Thiếu log ra", time: "07:49 -", in: "07:49", out: "", late: 0, early: 0 },
+                { date: "Friday, March 27, 2026", id: "10188", name: "HOÀNG THỊ THU", dept: "QC", reason: "Đi trễ", status: "Có công - đi trễ", time: "08:26 - 17:04", in: "08:26", out: "17:04", late: 26, early: 0 },
+                { date: "Thursday, March 26, 2026", id: "10201", name: "BÙI MINH KHOA", dept: "Sản xuất", reason: "Chưa xếp ca", status: "Chưa xếp ca / nghỉ theo lịch", time: "", in: "", out: "", late: 0, early: 0 },
+                { date: "Wednesday, March 25, 2026", id: "10212", name: "ĐẶNG THỊ HỒNG", dept: "Kho vận", reason: "Về sớm", status: "Có công - về sớm", time: "08:00 - 15:28", in: "08:00", out: "15:28", late: 0, early: 32 },
+                { date: "Wednesday, March 25, 2026", id: "10224", name: "NGUYỄN THỊ MINH", dept: "Nhân sự", reason: "Thiếu giờ ra", status: "Thiếu log ra", time: "08:05 -", in: "08:05", out: "", late: 5, early: 0 },
+                { date: "Tuesday, March 24, 2026", id: "10237", name: "PHẠM VĂN THÀNH", dept: "Bảo trì", reason: "Đi trễ", status: "Có công - đi trễ", time: "08:31 - 17:18", in: "08:31", out: "17:18", late: 31, early: 0 },
+                { date: "Tuesday, March 24, 2026", id: "10245", name: "VŨ THỊ HẠNH", dept: "Kế toán", reason: "Chưa xếp ca", status: "Chưa xếp ca / nghỉ theo lịch", time: "", in: "", out: "", late: 0, early: 0 },
+                { date: "Monday, March 23, 2026", id: "10258", name: "TRẦN QUỐC HUY", dept: "QC", reason: "Về sớm", status: "Có công - về sớm", time: "07:48 - 15:20", in: "07:48", out: "15:20", late: 0, early: 40 },
+                { date: "Friday, March 20, 2026", id: "10263", name: "LÊ THỊ NGỌC", dept: "Long Hưng", reason: "Đi trễ", status: "Có công - đi trễ", time: "08:19 - 17:02", in: "08:19", out: "17:02", late: 19, early: 0 },
+                { date: "Thursday, March 19, 2026", id: "10271", name: "ĐỖ MINH TÚ", dept: "Tân Cảng 6", reason: "Thiếu giờ ra", status: "Thiếu log ra", time: "07:51 -", in: "07:51", out: "", late: 0, early: 0 },
+                { date: "Wednesday, March 18, 2026", id: "10286", name: "MAI THANH BÌNH", dept: "Sản xuất", reason: "Về sớm", status: "Có công - về sớm", time: "07:44 - 15:36", in: "07:44", out: "15:36", late: 0, early: 24 },
+                { date: "Tuesday, March 17, 2026", id: "10294", name: "CAO THỊ LAN", dept: "Hành chính", reason: "Đi trễ", status: "Có công - đi trễ", time: "08:14 - 17:09", in: "08:14", out: "17:09", late: 14, early: 0 },
+                { date: "Monday, March 16, 2026", id: "10302", name: "NGUYỄN VĂN HIẾU", dept: "Kho vận", reason: "Chưa xếp ca", status: "Chưa xếp ca / nghỉ theo lịch", time: "", in: "", out: "", late: 0, early: 0 },
+                { date: "Friday, March 13, 2026", id: "10315", name: "PHẠM THỊ DIỄM", dept: "Kỹ thuật", reason: "Thiếu giờ ra", status: "Thiếu log ra", time: "08:01 -", in: "08:01", out: "", late: 1, early: 0 }
             ],
             rawLogs: [
                 { date: "Saturday, Sep 15, 2018", id: "02013", name: "HÙNG", dept: "Tân Cảng 6", code: "2013", check: "9/15/2018 9:49:56 AM - 5:45:16 PM", count: 6, machine: "Máy TÂN CẢNG 6" },
                 { date: "Saturday, Sep 15, 2018", id: "3", name: "NGUYỄN VĂN NHẬT", dept: "Long Hưng", code: "3", check: "9/15/2018 9:52:38 AM - 4:23:37 PM", count: 3, machine: "Máy LONG HƯNG" },
                 { date: "Saturday, Sep 15, 2018", id: "972", name: "VÕ HỒNG PHƯƠNG", dept: "Sản xuất", code: "972", check: "9/15/2018 9:26:42 AM - 5:39:00 PM", count: 2, machine: "Máy SẢN XUẤT" },
                 { date: "Monday, Mar 02, 2026", id: "10048", name: "ĐÀO ĐÌNH MINH", dept: "Kỹ thuật", code: "1048", check: "3/2/2026 8:35:04 AM - 5:42:18 PM", count: 4, machine: "Máy KỸ THUẬT" },
-                { date: "Monday, Mar 02, 2026", id: "10112", name: "TRẦN THỊ BÍCH NGỌC", dept: "Hành chính", code: "1112", check: "3/2/2026 7:56:12 AM - 5:03:55 PM", count: 5, machine: "Máy HÀNH CHÍNH" }
+                { date: "Monday, Mar 02, 2026", id: "10112", name: "TRẦN THỊ BÍCH NGỌC", dept: "Hành chính", code: "1112", check: "3/2/2026 7:56:12 AM - 5:03:55 PM", count: 5, machine: "Máy HÀNH CHÍNH" },
+                { date: "Monday, Mar 02, 2026", id: "10152", name: "NGUYỄN HOÀNG NAM", dept: "Nhân sự", code: "1152", check: "3/2/2026 8:18:10 AM - 5:10:05 PM", count: 4, machine: "Máy NHÂN SỰ" },
+                { date: "Tuesday, Mar 03, 2026", id: "10166", name: "TRỊNH THỊ MAI", dept: "Kế toán", code: "1166", check: "3/3/2026 7:53:22 AM - 4:48:16 PM", count: 4, machine: "Máy KẾ TOÁN" },
+                { date: "Tuesday, Mar 03, 2026", id: "10173", name: "LÂM QUỐC BẢO", dept: "Bảo trì", code: "1173", check: "3/3/2026 7:49:03 AM - 5:31:44 PM", count: 5, machine: "Máy BẢO TRÌ" },
+                { date: "Wednesday, Mar 04, 2026", id: "10188", name: "HOÀNG THỊ THU", dept: "QC", code: "1188", check: "3/4/2026 8:26:31 AM - 5:04:20 PM", count: 4, machine: "Máy QC" },
+                { date: "Wednesday, Mar 04, 2026", id: "10201", name: "BÙI MINH KHOA", dept: "Sản xuất", code: "1201", check: "3/4/2026 7:42:55 AM - 5:22:09 PM", count: 6, machine: "Máy SẢN XUẤT" },
+                { date: "Thursday, Mar 05, 2026", id: "10212", name: "ĐẶNG THỊ HỒNG", dept: "Kho vận", code: "1212", check: "3/5/2026 8:00:14 AM - 3:28:09 PM", count: 3, machine: "Máy KHO VẬN" },
+                { date: "Friday, Mar 06, 2026", id: "10224", name: "NGUYỄN THỊ MINH", dept: "Nhân sự", code: "1224", check: "3/6/2026 8:05:11 AM - 5:01:42 PM", count: 4, machine: "Máy NHÂN SỰ" },
+                { date: "Monday, Mar 09, 2026", id: "10237", name: "PHẠM VĂN THÀNH", dept: "Bảo trì", code: "1237", check: "3/9/2026 8:31:25 AM - 5:18:36 PM", count: 4, machine: "Máy BẢO TRÌ" },
+                { date: "Tuesday, Mar 10, 2026", id: "10245", name: "VŨ THỊ HẠNH", dept: "Kế toán", code: "1245", check: "3/10/2026 7:57:03 AM - 5:06:21 PM", count: 5, machine: "Máy KẾ TOÁN" },
+                { date: "Wednesday, Mar 11, 2026", id: "10258", name: "TRẦN QUỐC HUY", dept: "QC", code: "1258", check: "3/11/2026 7:48:47 AM - 3:20:12 PM", count: 3, machine: "Máy QC" },
+                { date: "Thursday, Mar 12, 2026", id: "10263", name: "LÊ THỊ NGỌC", dept: "Long Hưng", code: "1263", check: "3/12/2026 8:19:30 AM - 5:02:41 PM", count: 4, machine: "Máy LONG HƯNG" },
+                { date: "Friday, Mar 13, 2026", id: "10271", name: "ĐỖ MINH TÚ", dept: "Tân Cảng 6", code: "1271", check: "3/13/2026 7:51:09 AM - 5:13:08 PM", count: 4, machine: "Máy TÂN CẢNG 6" },
+                { date: "Monday, Mar 16, 2026", id: "10286", name: "MAI THANH BÌNH", dept: "Sản xuất", code: "1286", check: "3/16/2026 7:44:50 AM - 3:36:33 PM", count: 3, machine: "Máy SẢN XUẤT" },
+                { date: "Tuesday, Mar 17, 2026", id: "10294", name: "CAO THỊ LAN", dept: "Hành chính", code: "1294", check: "3/17/2026 8:14:18 AM - 5:09:44 PM", count: 4, machine: "Máy HÀNH CHÍNH" },
+                { date: "Wednesday, Mar 18, 2026", id: "10315", name: "PHẠM THỊ DIỄM", dept: "Kỹ thuật", code: "1315", check: "3/18/2026 8:01:17 AM - 5:21:36 PM", count: 5, machine: "Máy KỸ THUẬT" }
             ]
         };
 
@@ -284,27 +319,27 @@
                 <!-- 6 KPI Row (Simple border, flat, centered data values) -->
                 <div class="grid grid-cols-6 gap-3 mb-3">
                     <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
-                        <p class="text-xl font-bold text-slate-800 leading-none">186</p>
+                        <p class="text-xl font-bold text-slate-800 leading-none">250</p>
                         <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Employees</p>
                     </div>
                     <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
-                        <p class="text-xl font-bold text-slate-800 leading-none">3,126</p>
+                        <p class="text-xl font-bold text-slate-800 leading-none">4,200</p>
                         <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Work Days</p>
                     </div>
                     <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
-                        <p class="text-xl font-bold text-slate-800 leading-none">2,964.75</p>
+                        <p class="text-xl font-bold text-slate-800 leading-none">3,976.25</p>
                         <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Work Count</p>
                     </div>
                     <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
-                        <p class="text-xl font-bold text-slate-800 leading-none">25.8K</p>
+                        <p class="text-xl font-bold text-slate-800 leading-none">34.7K</p>
                         <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Work Hours</p>
                     </div>
                     <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
-                        <p class="text-xl font-bold text-slate-800 leading-none text-[#181a40]">42</p>
+                        <p class="text-xl font-bold text-slate-800 leading-none text-[#181a40]">63</p>
                         <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Late Days</p>
                     </div>
                     <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
-                        <p class="text-xl font-bold text-slate-800 leading-none text-rose-700">428</p>
+                        <p class="text-xl font-bold text-slate-800 leading-none text-rose-700">622</p>
                         <p class="text-[9px] text-slate-400 mt-1 font-semibold">Anomaly Count</p>
                     </div>
                 </div>
@@ -331,7 +366,7 @@
                         <span class="text-[9px] font-bold text-slate-700 uppercase tracking-wider">Danh sách ca bất thường cần kiểm tra</span>
                         <span class="text-[8px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-bold uppercase">Mới nhất</span>
                     </div>
-                    <div class="overflow-y-auto flex-1 max-h-48">
+                    <div class="overflow-y-auto flex-1 max-h-[280px]">
                         <table class="w-full text-left border-collapse text-[9px]">
                             <thead>
                                 <tr class="bg-slate-100 border-b border-slate-200 text-slate-600 font-bold uppercase">
@@ -356,9 +391,9 @@
                                         <td class="p-2">${row.dept}</td>
                                         <td class="p-2 text-[#181a40] font-bold">${row.reason}</td>
                                         <td class="p-2 text-slate-500">${row.status}</td>
-                                        <td class="p-2 text-center">—</td>
-                                        <td class="p-2 text-center">—</td>
-                                        <td class="p-2 text-center">—</td>
+                                        <td class="p-2 text-center">${row.time || "—"}</td>
+                                        <td class="p-2 text-center">${row.in || "—"}</td>
+                                        <td class="p-2 text-center">${row.out || "—"}</td>
                                         <td class="p-2 text-right font-bold">${row.late}</td>
                                     </tr>
                                 `).join('')}
@@ -397,7 +432,7 @@
                     plugins: { legend: { display: false } },
                     scales: {
                         y: { min: 0, max: 20, ticks: { font: { size: 8 } } },
-                        x: { ticks: { font: { size: 8 } } }
+                        x: { ticks: { font: { size: 8 }, maxRotation: 0, minRotation: 0 } }
                     }
                 }
             });
@@ -407,12 +442,12 @@
             new Chart(ctxDept, {
                 type: 'bar',
                 data: {
-                    labels: ['Tân Cảng 6', 'Long Hưng', 'Sản xuất', 'Kho vận', 'Hành chính', 'Kỹ thuật'],
+                    labels: ['Tân Cảng 6', 'Long Hưng', 'Sản xuất', 'Kho vận', 'Hành chính', 'Kỹ thuật', 'Nhân sự', 'Kế toán', 'Bảo trì', 'QC'],
                     datasets: [{
-                        data: [9, 8, 11, 6, 3, 5],
+                        data: [9, 8, 11, 6, 3, 5, 4, 4, 6, 7],
                         backgroundColor: themeNavy,
                         borderRadius: 2,
-                        barThickness: 16
+                        barThickness: 14
                     }]
                 },
                 options: {
@@ -481,31 +516,47 @@
                                 <td class="p-2.5 font-bold text-slate-800">Kỹ thuật</td>
                                 <td class="p-2.5 text-center">17</td><td class="p-2.5 text-center">280</td><td class="p-2.5 text-center">1,907.35</td><td class="p-2.5 text-center">272.00</td><td class="p-2.5 text-center text-[#181a40]">5</td><td class="p-2.5 text-center">5</td><td class="p-2.5 text-center">39</td>
                             </tr>
+                            <tr>
+                                <td class="p-2.5 font-bold text-slate-800">Nhân sự</td>
+                                <td class="p-2.5 text-center">14</td><td class="p-2.5 text-center">238</td><td class="p-2.5 text-center">1,940.30</td><td class="p-2.5 text-center">224.50</td><td class="p-2.5 text-center text-[#181a40]">4</td><td class="p-2.5 text-center">4</td><td class="p-2.5 text-center">36</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 font-bold text-slate-800">Kế toán</td>
+                                <td class="p-2.5 text-center">12</td><td class="p-2.5 text-center">204</td><td class="p-2.5 text-center">1,720.10</td><td class="p-2.5 text-center">193.00</td><td class="p-2.5 text-center text-[#181a40]">4</td><td class="p-2.5 text-center">3</td><td class="p-2.5 text-center">34</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 font-bold text-slate-800">Bảo trì</td>
+                                <td class="p-2.5 text-center">18</td><td class="p-2.5 text-center">306</td><td class="p-2.5 text-center">3,020.60</td><td class="p-2.5 text-center">289.00</td><td class="p-2.5 text-center text-[#181a40]">6</td><td class="p-2.5 text-center">8</td><td class="p-2.5 text-center">58</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 font-bold text-slate-800">QC</td>
+                                <td class="p-2.5 text-center">20</td><td class="p-2.5 text-center">326</td><td class="p-2.5 text-center">2,180.00</td><td class="p-2.5 text-center">305.00</td><td class="p-2.5 text-center text-[#181a40]">7</td><td class="p-2.5 text-center">7</td><td class="p-2.5 text-center">66</td>
+                            </tr>
                             <tr class="bg-slate-50 font-bold text-slate-800 border-t border-slate-300">
                                 <td class="p-2.5">Total</td>
-                                <td class="p-2.5 text-center">186</td><td class="p-2.5 text-center">3,126</td><td class="p-2.5 text-center">25,800.00</td><td class="p-2.5 text-center">2,964.75</td><td class="p-2.5 text-center">42</td><td class="p-2.5 text-center">61</td><td class="p-2.5 text-center">428</td>
+                                <td class="p-2.5 text-center">250</td><td class="p-2.5 text-center">4,200</td><td class="p-2.5 text-center">34,663.50</td><td class="p-2.5 text-center">3,976.25</td><td class="p-2.5 text-center">63</td><td class="p-2.5 text-center">83</td><td class="p-2.5 text-center">622</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <!-- 3 small side-by-side charts matching Image 3 -->
-                <div class="grid grid-cols-3 gap-3 flex-1 min-h-[140px]">
-                    <div class="bg-white p-2 rounded border border-slate-200 shadow-sm flex flex-col justify-between">
-                        <p class="text-[9px] font-bold text-slate-600">Tổng giờ công theo phòng ban</p>
-                        <div class="h-28 relative">
+                <div class="grid grid-cols-3 gap-3 flex-1 min-h-0">
+                    <div class="bg-white p-2 rounded border border-slate-200 shadow-sm flex flex-col min-h-0">
+                        <p class="text-[9px] font-bold text-slate-600 mb-2">Tổng giờ công theo phòng ban</p>
+                        <div class="flex-1 min-h-0 relative">
                             <canvas id="chartDeptHours"></canvas>
                         </div>
                     </div>
-                    <div class="bg-white p-2 rounded border border-slate-200 shadow-sm flex flex-col justify-between">
-                        <p class="text-[9px] font-bold text-slate-600">Ngày đi trễ theo phòng ban</p>
-                        <div class="h-28 relative">
+                    <div class="bg-white p-2 rounded border border-slate-200 shadow-sm flex flex-col min-h-0">
+                        <p class="text-[9px] font-bold text-slate-600 mb-2">Ngày đi trễ theo phòng ban</p>
+                        <div class="flex-1 min-h-0 relative">
                             <canvas id="chartDeptLate2"></canvas>
                         </div>
                     </div>
-                    <div class="bg-white p-2 rounded border border-slate-200 shadow-sm flex flex-col justify-between">
-                        <p class="text-[9px] font-bold text-slate-600">Số bất thường theo phòng ban</p>
-                        <div class="h-28 relative">
+                    <div class="bg-white p-2 rounded border border-slate-200 shadow-sm flex flex-col min-h-0">
+                        <p class="text-[9px] font-bold text-slate-600 mb-2">Số bất thường theo phòng ban</p>
+                        <div class="flex-1 min-h-0 relative">
                             <canvas id="chartDeptAnomaly2"></canvas>
                         </div>
                     </div>
@@ -520,11 +571,11 @@
             new Chart(document.getElementById('chartDeptHours').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: ['Tân Cảng 6', 'Long Hưng', 'Sản xuất', 'Kho vận', 'Hành chính', 'Kỹ thuật'],
+                    labels: ['Tân Cảng 6', 'Long Hưng', 'Sản xuất', 'Kho vận', 'Hành chính', 'Kỹ thuật', 'Nhân sự', 'Kế toán', 'Bảo trì', 'QC'],
                     datasets: [{
-                        data: [5.86, 5.12, 6.74, 3.96, 2.21, 1.91],
+                        data: [5.86, 5.12, 6.74, 3.96, 2.21, 1.91, 1.94, 1.72, 3.02, 2.18],
                         backgroundColor: themeNavy,
-                        barThickness: 16
+                        barThickness: 14
                     }]
                 },
                 options: {
@@ -533,7 +584,7 @@
                     plugins: { legend: { display: false } },
                     scales: {
                         y: { min: 0, max: 7, ticks: { font: { size: 8 }, callback: value => value + 'K' } },
-                        x: { ticks: { font: { size: 8 } } }
+                        x: { ticks: { font: { size: 8 }, maxRotation: 0, minRotation: 0 } }
                     }
                 }
             });
@@ -542,11 +593,11 @@
             new Chart(document.getElementById('chartDeptLate2').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: ['Tân Cảng 6', 'Long Hưng', 'Sản xuất', 'Kho vận', 'Hành chính', 'Kỹ thuật'],
+                    labels: ['Tân Cảng 6', 'Long Hưng', 'Sản xuất', 'Kho vận', 'Hành chính', 'Kỹ thuật', 'Nhân sự', 'Kế toán', 'Bảo trì', 'QC'],
                     datasets: [{
-                        data: [9, 8, 11, 6, 3, 5],
+                        data: [9, 8, 11, 6, 3, 5, 4, 4, 6, 7],
                         backgroundColor: themeNavy,
-                        barThickness: 16
+                        barThickness: 14
                     }]
                 },
                 options: {
@@ -555,7 +606,7 @@
                     plugins: { legend: { display: false } },
                     scales: {
                         y: { min: 0, max: 12, ticks: { font: { size: 8 } } },
-                        x: { ticks: { font: { size: 8 } } }
+                        x: { ticks: { font: { size: 8 }, maxRotation: 0, minRotation: 0 } }
                     }
                 }
             });
@@ -564,11 +615,11 @@
             new Chart(document.getElementById('chartDeptAnomaly2').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: ['Tân Cảng 6', 'Long Hưng', 'Sản xuất', 'Kho vận', 'Hành chính', 'Kỹ thuật'],
+                    labels: ['Tân Cảng 6', 'Long Hưng', 'Sản xuất', 'Kho vận', 'Hành chính', 'Kỹ thuật', 'Nhân sự', 'Kế toán', 'Bảo trì', 'QC'],
                     datasets: [{
-                        data: [96, 82, 118, 64, 29, 39],
+                        data: [96, 82, 118, 64, 29, 39, 36, 34, 58, 66],
                         backgroundColor: themeNavy,
-                        barThickness: 16
+                        barThickness: 14
                     }]
                 },
                 options: {
@@ -576,8 +627,8 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        y: { min: 0, max: 130, ticks: { font: { size: 8 } } },
-                        x: { ticks: { font: { size: 8 } } }
+                        y: { min: 0, max: 125, ticks: { font: { size: 8 } } },
+                        x: { ticks: { font: { size: 8 }, maxRotation: 0, minRotation: 0 } }
                     }
                 }
             });
@@ -596,11 +647,11 @@
                 <!-- 5 Card row for employee -->
                 <div class="grid grid-cols-5 gap-3 mb-3">
                     <div class="bg-white p-2 rounded border border-slate-200 text-center shadow-sm">
-                        <p class="text-lg font-bold text-slate-800 leading-none">3,126</p>
+                        <p class="text-lg font-bold text-slate-800 leading-none">4,200</p>
                         <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Work Days</p>
                     </div>
                     <div class="bg-white p-2 rounded border border-slate-200 text-center shadow-sm">
-                        <p class="text-lg font-bold text-slate-800 leading-none">25.8K</p>
+                        <p class="text-lg font-bold text-slate-800 leading-none">34.7K</p>
                         <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Work Hours</p>
                     </div>
                     <div class="bg-white p-2 rounded border border-slate-200 text-center shadow-sm">
@@ -608,11 +659,11 @@
                         <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total OT Hours</p>
                     </div>
                     <div class="bg-white p-2 rounded border border-slate-200 text-center shadow-sm">
-                        <p class="text-lg font-bold text-[#181a40] leading-none">42</p>
+                        <p class="text-lg font-bold text-[#181a40] leading-none">63</p>
                         <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Late Days</p>
                     </div>
                     <div class="bg-white p-2 rounded border border-slate-200 text-center shadow-sm">
-                        <p class="text-lg font-bold text-rose-700 leading-none">61</p>
+                        <p class="text-lg font-bold text-rose-700 leading-none">83</p>
                         <p class="text-[9px] text-slate-400 mt-1 font-semibold">Missing Check Days</p>
                     </div>
                 </div>
@@ -622,7 +673,7 @@
                     <div class="bg-slate-50 px-3 py-1.5 border-b border-slate-200">
                         <span class="text-[9px] font-bold text-slate-700 uppercase">Chi tiết chấm công theo nhân viên</span>
                     </div>
-                    <div class="overflow-y-auto flex-1 max-h-[220px]">
+                    <div class="overflow-y-auto flex-1 max-h-[360px]">
                         <table class="w-full text-left border-collapse text-[9px]">
                             <thead>
                                 <tr class="bg-slate-100 border-b border-slate-200 font-bold text-slate-600 uppercase">
@@ -667,6 +718,17 @@
                                     <td class="p-2 text-right">0</td>
                                     <td class="p-2 text-amber-600">Có công - về sớm (181m)</td>
                                 </tr>
+                                <tr><td class="p-2">Monday, March 02, 2026</td><td class="p-2 font-mono">10048</td><td class="p-2 font-bold text-slate-800">ĐÀO ĐÌNH MINH</td><td class="p-2 text-center text-indigo-600 font-semibold">HC_LT 08:35:04 - 17:42:18</td><td class="p-2 text-right">1.00</td><td class="p-2 text-right">8.00</td><td class="p-2 text-right">35</td><td class="p-2 text-indigo-600 font-bold">Có công - đi trễ</td></tr>
+                                <tr><td class="p-2">Monday, March 02, 2026</td><td class="p-2 font-mono">10152</td><td class="p-2 font-bold text-slate-800">NGUYỄN HOÀNG NAM</td><td class="p-2 text-center text-emerald-600 font-semibold">HC_LT 08:18:10 - 17:10:05</td><td class="p-2 text-right">1.00</td><td class="p-2 text-right">8.00</td><td class="p-2 text-right">18</td><td class="p-2 text-indigo-600 font-bold">Có công - đi trễ</td></tr>
+                                <tr><td class="p-2">Tuesday, March 03, 2026</td><td class="p-2 font-mono">10166</td><td class="p-2 font-bold text-slate-800">TRỊNH THỊ MAI</td><td class="p-2 text-center text-amber-600 font-semibold">HC_LT 07:53:22 - 16:48:16</td><td class="p-2 text-right">1.00</td><td class="p-2 text-right">7.45</td><td class="p-2 text-right">0</td><td class="p-2 text-amber-600">Có công - về sớm</td></tr>
+                                <tr><td class="p-2">Wednesday, March 04, 2026</td><td class="p-2 font-mono">10188</td><td class="p-2 font-bold text-slate-800">HOÀNG THỊ THU</td><td class="p-2 text-center text-emerald-600 font-semibold">HC_LT 08:26:31 - 17:04:20</td><td class="p-2 text-right">1.00</td><td class="p-2 text-right">8.00</td><td class="p-2 text-right">26</td><td class="p-2 text-indigo-600 font-bold">Có công - đi trễ</td></tr>
+                                <tr><td class="p-2">Thursday, March 05, 2026</td><td class="p-2 font-mono">10212</td><td class="p-2 font-bold text-slate-800">ĐẶNG THỊ HỒNG</td><td class="p-2 text-center text-amber-600 font-semibold">HC_LT 08:00:14 - 15:28:09</td><td class="p-2 text-right">0.88</td><td class="p-2 text-right">7.10</td><td class="p-2 text-right">0</td><td class="p-2 text-amber-600">Có công - về sớm</td></tr>
+                                <tr><td class="p-2">Friday, March 06, 2026</td><td class="p-2 font-mono">10224</td><td class="p-2 font-bold text-slate-800">NGUYỄN THỊ MINH</td><td class="p-2 text-center text-slate-500 font-semibold">HC_LT 08:05:11 -</td><td class="p-2 text-right">0.50</td><td class="p-2 text-right">4.00</td><td class="p-2 text-right">5</td><td class="p-2 text-slate-600 font-bold">Thiếu log ra</td></tr>
+                                <tr><td class="p-2">Monday, March 09, 2026</td><td class="p-2 font-mono">10237</td><td class="p-2 font-bold text-slate-800">PHẠM VĂN THÀNH</td><td class="p-2 text-center text-indigo-600 font-semibold">HC_LT 08:31:25 - 17:18:36</td><td class="p-2 text-right">1.00</td><td class="p-2 text-right">8.00</td><td class="p-2 text-right">31</td><td class="p-2 text-indigo-600 font-bold">Có công - đi trễ</td></tr>
+                                <tr><td class="p-2">Tuesday, March 10, 2026</td><td class="p-2 font-mono">10245</td><td class="p-2 font-bold text-slate-800">VŨ THỊ HẠNH</td><td class="p-2 text-center text-emerald-600 font-semibold">HC_LT 07:57:03 - 17:06:21</td><td class="p-2 text-right">1.00</td><td class="p-2 text-right">8.00</td><td class="p-2 text-right">0</td><td class="p-2 text-emerald-600 font-bold">Có công</td></tr>
+                                <tr><td class="p-2">Wednesday, March 11, 2026</td><td class="p-2 font-mono">10258</td><td class="p-2 font-bold text-slate-800">TRẦN QUỐC HUY</td><td class="p-2 text-center text-amber-600 font-semibold">HC_LT 07:48:47 - 15:20:12</td><td class="p-2 text-right">0.88</td><td class="p-2 text-right">7.05</td><td class="p-2 text-right">0</td><td class="p-2 text-amber-600">Có công - về sớm</td></tr>
+                                <tr><td class="p-2">Thursday, March 12, 2026</td><td class="p-2 font-mono">10263</td><td class="p-2 font-bold text-slate-800">LÊ THỊ NGỌC</td><td class="p-2 text-center text-indigo-600 font-semibold">HC_LT 08:19:30 - 17:02:41</td><td class="p-2 text-right">1.00</td><td class="p-2 text-right">8.00</td><td class="p-2 text-right">19</td><td class="p-2 text-indigo-600 font-bold">Có công - đi trễ</td></tr>
+                                <tr><td class="p-2">Friday, March 13, 2026</td><td class="p-2 font-mono">10271</td><td class="p-2 font-bold text-slate-800">ĐỖ MINH TÚ</td><td class="p-2 text-center text-slate-500 font-semibold">HC_LT 07:51:09 -</td><td class="p-2 text-right">0.50</td><td class="p-2 text-right">4.00</td><td class="p-2 text-right">0</td><td class="p-2 text-slate-600 font-bold">Thiếu log ra</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -687,15 +749,15 @@
                 <!-- 4 cards top of layout -->
                 <div class="grid grid-cols-4 gap-3 mb-3">
                     <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
-                        <p class="text-xl font-bold text-rose-600 leading-none">428</p>
+                        <p class="text-xl font-bold text-rose-600 leading-none">622</p>
                         <p class="text-[9px] text-slate-400 mt-1 font-semibold">Anomaly Count</p>
                     </div>
                     <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
-                        <p class="text-xl font-bold text-slate-800 leading-none">61</p>
+                        <p class="text-xl font-bold text-slate-800 leading-none">83</p>
                         <p class="text-[9px] text-slate-400 mt-1 font-semibold">Missing Check Days</p>
                     </div>
                     <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
-                        <p class="text-xl font-bold text-slate-800 leading-none text-[#181a40]">42</p>
+                        <p class="text-xl font-bold text-slate-800 leading-none text-[#181a40]">63</p>
                         <p class="text-[9px] text-slate-400 mt-1 font-semibold">Total Late Days</p>
                     </div>
                     <div class="bg-white p-2.5 rounded border border-slate-200 text-center shadow-sm">
@@ -704,11 +766,11 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-5 gap-3 flex-1 min-h-[160px]">
+                <div class="grid grid-cols-5 gap-3 flex-1 min-h-[360px]">
                     <!-- Left: bar chart representation -->
-                    <div class="col-span-2 bg-white p-2 rounded border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div class="col-span-2 bg-white p-2 rounded border border-slate-200 shadow-sm flex flex-col">
                         <p class="text-[9px] font-bold text-slate-600">Số bất thường theo loại lỗi</p>
-                        <div class="h-32 relative">
+                        <div class="flex-1 min-h-[320px] relative mt-2">
                             <canvas id="chartAnomalyReasonsType"></canvas>
                         </div>
                     </div>
@@ -718,29 +780,17 @@
                         <div class="bg-slate-50 px-3 py-1 border-b border-slate-200">
                             <span class="text-[9px] font-bold text-slate-700 uppercase">Danh sách bất thường cần xử lý</span>
                         </div>
-                        <div class="overflow-y-auto flex-1 max-h-[120px]">
+                        <div class="overflow-y-auto flex-1 max-h-[360px]">
                             <table class="w-full text-left border-collapse text-[9px]">
                                 <tbody class="divide-y divide-slate-100 text-slate-600">
-                                    <tr>
-                                        <td class="p-1.5">Sunday, March 01, 2026</td>
-                                        <td class="p-1.5 font-bold">NGÔ THỊ KIM LAN</td>
-                                        <td class="p-1.5"><span class="px-1 py-0.5 rounded bg-amber-50 text-amber-700 text-[8px] font-bold">Chưa xếp ca</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1.5">Sunday, March 01, 2026</td>
-                                        <td class="p-1.5 font-bold">PHAN ĐÌNH HẠNH</td>
-                                        <td class="p-1.5"><span class="px-1 py-0.5 rounded bg-rose-50 text-rose-700 text-[8px] font-bold">Về sớm</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1.5">Tuesday, March 31, 2026</td>
-                                        <td class="p-1.5 font-bold">PHẠM XUÂN HẢI</td>
-                                        <td class="p-1.5"><span class="px-1 py-0.5 rounded bg-indigo-50 text-indigo-700 text-[8px] font-bold">Đi trễ</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1.5">Tuesday, March 31, 2026</td>
-                                        <td class="p-1.5 font-bold">PHAN CHÂN TUYỂN</td>
-                                        <td class="p-1.5"><span class="px-1 py-0.5 rounded bg-slate-100 text-slate-700 text-[8px] font-bold">Thiếu giờ ra</span></td>
-                                    </tr>
+                                    ${database.anomalies.map(row => `
+                                        <tr class="hover:bg-slate-50">
+                                            <td class="p-1.5">${row.date}</td>
+                                            <td class="p-1.5 font-bold text-slate-800">${row.name}</td>
+                                            <td class="p-1.5 text-slate-500">${row.dept}</td>
+                                            <td class="p-1.5"><span class="px-1 py-0.5 rounded bg-slate-100 text-slate-700 text-[8px] font-bold">${row.reason}</span></td>
+                                        </tr>
+                                    `).join('')}
                                 </tbody>
                             </table>
                         </div>
@@ -758,10 +808,10 @@
                 data: {
                     labels: ['Chưa xếp ca', 'Thiếu giờ ra', 'Về sớm', 'Đi trễ'],
                     datasets: [{
-                        data: [248, 61, 55, 42],
+                        data: [340, 83, 72, 63],
                         backgroundColor: themeNavy,
                         borderRadius: 2,
-                        barThickness: 12
+                        barThickness: 28
                     }]
                 },
                 options: {
@@ -769,8 +819,8 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        y: { min: 0, max: 260, ticks: { font: { size: 8 } } },
-                        x: { ticks: { font: { size: 8 } } }
+                        y: { min: 0, max: 360, ticks: { font: { size: 8 } } },
+                        x: { ticks: { font: { size: 8 }, maxRotation: 0, minRotation: 0 } }
                     }
                 }
             });
@@ -803,7 +853,7 @@
                     <div class="bg-slate-50 px-3 py-1.5 border-b border-slate-200">
                         <span class="text-[9px] font-bold text-slate-700 uppercase">Nhật ký log gốc từ máy chấm công</span>
                     </div>
-                    <div class="overflow-y-auto flex-1 max-h-[180px]">
+                    <div class="overflow-y-auto flex-1 max-h-[360px]">
                         <table class="w-full text-left border-collapse text-[9px]">
                             <thead>
                                 <tr class="bg-slate-100 border-b border-slate-200 text-slate-600 font-bold uppercase">
